@@ -1,0 +1,55 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  """User's email"""
+  email: String!
+
+  """User's password"""
+  password: String!
+}
+
+input LoginInput {
+  """User's email"""
+  email: String!
+
+  """User's password"""
+  password: String!
+}
+
+type LoginOutput {
+  """User's id"""
+  id: Int!
+
+  """JWT token"""
+  token: String!
+}
+
+type Mutation {
+  register(createUserInput: CreateUserInput!): User!
+  removeUser(id: Int!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+}
+
+type Query {
+  login(loginInput: LoginInput!): LoginOutput!
+  user(id: Int!): User!
+  users: [User!]!
+}
+
+input UpdateUserInput {
+  email: String
+  id: Int!
+
+  """User's password"""
+  password: String
+}
+
+type User {
+  """User's email"""
+  email: String!
+
+  """Auto generated id"""
+  id: Int!
+}
