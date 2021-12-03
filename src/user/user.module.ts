@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from 'src/config/config.module';
-import { ConfigService } from 'src/config/config.service';
+import { ConfigProvider } from 'src/config/config.service';
 
 @Module({
   providers: [UserResolver, UserService],
@@ -13,8 +13,8 @@ import { ConfigService } from 'src/config/config.service';
     TypeOrmModule.forFeature([User]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
+      inject: [ConfigProvider],
+      useFactory: async (configService: ConfigProvider) => ({
         secret: configService.config.JWT_SECRET,
       }),
     }),

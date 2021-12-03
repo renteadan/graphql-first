@@ -13,10 +13,17 @@ export interface IConfig {
   TYPEORM_SYNCHRONIZE: string;
   TYPEORM_LOGGING: string;
   TYPEORM_ENTITIES: string;
+  GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_SECRET: string;
+  GOOGLE_REDIRECT_URI: string;
+  FIREBASE_CLIENT_EMAIL: string;
+  FIREBASE_PRIVATE_KEY: string;
+  FIREBASE_PROJECT_ID: string;
+  FIREBASE_DATABASE_URL: string;
 }
 
 @Injectable()
-export class ConfigService {
+export class ConfigProvider {
   private envConfig: IConfig;
 
   constructor() {

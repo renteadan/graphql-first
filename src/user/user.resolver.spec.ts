@@ -1,3 +1,4 @@
+import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -17,6 +18,7 @@ describe('UserResolver', () => {
           useValue: jest.mock('typeorm'),
         },
       ],
+      imports: [JwtModule.register({ secret: 'secret' })],
     }).compile();
 
     resolver = module.get<UserResolver>(UserResolver);

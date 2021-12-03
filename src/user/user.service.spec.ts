@@ -1,3 +1,4 @@
+import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -15,6 +16,7 @@ describe('UserService', () => {
           useValue: jest.mock('typeorm'),
         },
       ],
+      imports: [JwtModule.register({ secret: 'secret' })],
     }).compile();
 
     service = module.get<UserService>(UserService);
