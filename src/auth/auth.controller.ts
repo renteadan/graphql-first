@@ -1,10 +1,13 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { FirebaseAuthGuard } from './guard/firebase-auth.guard';
 @Controller('auth')
 export class AuthController {
   constructor(private service: AuthService) {}
-  @Get('google/oauth')
-  googleAuth(@Query('code') query: string) {
-    return this.service.handleGoogleOAuth(query);
+
+  @Get('test')
+  @UseGuards(FirebaseAuthGuard)
+  test() {
+    return 'test';
   }
 }

@@ -20,15 +20,6 @@ export class AuthService {
       clientSecret: configProvider.config.GOOGLE_CLIENT_SECRET,
       redirectUri: configProvider.config.GOOGLE_REDIRECT_URI,
     });
-    this.app = admin.initializeApp({
-      credential: admin.credential.cert({
-        clientEmail: configProvider.config.FIREBASE_CLIENT_EMAIL,
-        privateKey: configProvider.config.FIREBASE_PRIVATE_KEY,
-        projectId: configProvider.config.FIREBASE_PROJECT_ID,
-      }),
-      databaseURL: configProvider.config.FIREBASE_DATABASE_URL,
-    });
+    this.app = admin.app();
   }
-
-  async handleGoogleOAuth(code: string) {}
 }
