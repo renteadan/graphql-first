@@ -1,29 +1,20 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
-import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { LoginInput, LoginOutput } from './dto/login.dto';
+import { Roles } from 'src/public/decorators/role.decorator';
+import { Role } from 'src/public/enums/role.enum';
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Mutation(() => User)
-  register(@Args('createUserInput') createUserInput: CreateUserInput) {
-    return this.userService.register(createUserInput);
-  }
-
-  @Query(() => LoginOutput, { name: 'login' })
-  login(@Args('loginInput') loginInput: LoginInput): Promise<LoginOutput> {
-    return this.userService.login(loginInput.email, loginInput.password);
-  }
-
   @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  async findOne(@Args('id', { type: () => Int }) id: number) {
     return this.userService.findOne(id);
   }
 
+  @Roles(Role.ADMIN)
   @Query(() => [User], { name: 'users' })
   findAll() {
     return this.userService.findAll();

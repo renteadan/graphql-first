@@ -1,13 +1,16 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
+import { Roles } from 'src/public/decorators/role.decorator';
+import { Role } from 'src/public/enums/role.enum';
+import { RequestUserInterface } from 'src/public/interfaces/request-user.interface';
 import { AuthService } from './auth.service';
-import { FirebaseAuthGuard } from './guard/firebase-auth.guard';
+
 @Controller('auth')
 export class AuthController {
   constructor(private service: AuthService) {}
 
+  @Roles(Role.ADMIN)
   @Get('test')
-  @UseGuards(FirebaseAuthGuard)
-  test() {
+  test(@Req() req: RequestUserInterface) {
     return 'test';
   }
 }

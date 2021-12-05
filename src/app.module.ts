@@ -7,6 +7,9 @@ import { getConnectionOptions } from 'typeorm';
 import { ConfigModule } from './config/config.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { FirebaseAuthGuard } from './public/guards/firebase-auth.guard';
+import { RoleGuard } from './public/guards/role.guard';
 
 @Module({
   imports: [
@@ -25,6 +28,16 @@ import { AuthModule } from './auth/auth.module';
     }),
     ConfigModule,
     AuthModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: FirebaseAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
+    },
   ],
 })
 export class AppModule {}

@@ -1,9 +1,11 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Role } from 'src/public/enums/role.enum';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum AuthProvider {
-  GOOGLE = 'google',
-  LOCAL = 'local',
+  GOOGLE = 'google.com',
+  LOCAL = 'password',
+  FACEBOOk = 'facebook.com',
 }
 
 @Entity()
@@ -18,26 +20,22 @@ export class User {
   email: string;
 
   @Column()
-  password: string;
+  @Field(() => String, { description: "User's name" })
+  name: string;
 
-  @Column()
-  salt: string;
-
-  @Column({ nullable: true })
-  scopes: string;
-
-  @Column({ nullable: true })
-  auth_token: string;
-
-  @Column({ nullable: true })
-  expires_at: Date;
-
-  @Column({ nullable: true })
-  refresh_token: string;
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.USER,
+  })
+  role: Role;
 
   @Column({ default: AuthProvider.LOCAL, enum: AuthProvider, type: 'enum' })
   authProvider: AuthProvider;
 
   @Column({ nullable: true })
-  googleId: string;
+  firebaseId: string;
+
+  @Column({ type: 'json', nullable: true })
+  firebaseObject: object;
 }
