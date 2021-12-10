@@ -14,6 +14,6 @@ async function bootstrap() {
     databaseURL: configProvider.config.FIREBASE_DATABASE_URL,
   });
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  await app.listen(+configProvider.config.PORT);
 }
 bootstrap();
