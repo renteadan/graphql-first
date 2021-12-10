@@ -18,6 +18,7 @@ import { RoleGuard } from './public/guards/role.guard';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
+      introspection: true,
     }),
     UserModule,
     TypeOrmModule.forRootAsync({
